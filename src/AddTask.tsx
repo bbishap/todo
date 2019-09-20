@@ -28,15 +28,7 @@ export const AddTask: React.FC<Props> = (props) => {
 
   const onButtonClick: Function = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-
-    // console.log('Button Clicked')
-
-    // console.log('taskName', taskName)
-    // console.log('deadline', deadline)
-    // console.log('Private Task', switchTask)
     const newTask = { taskName, deadline, private: switchTask, deleted: false }
-    // console.log('New Task', newTask)
-
     let uid = firebase.auth().currentUser!.uid
 
     db.collection('todos').doc(uid).get().then(querySnapshot => {

@@ -13,16 +13,17 @@ interface todoItem {
 }
 const boolType: boolean = false
 const strType: string = ''
+const dateType: any = ''
 
 export const MyTask: React.FC = (props) => {
 
   const [task, setTask] = useState([] as todoItem[])
   const [showEdit, setShowEdit] = useState(boolType)
   const [editText, setEditText] = useState('')
-  const [editTime, setEditTime] = useState(strType)
+  const [editTime, setEditTime] = useState(dateType)
   const [index, setIndex] = useState()
   const [oldTask, setOldTask] = useState(strType)
-  const [oldDate, setOldDate] = useState(strType)
+  const [oldDate, setOldDate] = useState(dateType)
 
   const getAllPrivateData = () => {
     db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(res => {
@@ -47,7 +48,6 @@ export const MyTask: React.FC = (props) => {
     const oldTodo: string = state[i].taskName
     const oldTime: string = state[i].deadline
     setOldTask(oldTodo)
-    setOldDate(oldTime)
   }
   const handleEditSubmit = (e: any) => {
     e.preventDefault()
@@ -60,16 +60,14 @@ export const MyTask: React.FC = (props) => {
   }
 
   const handleInput = (e: any) => {
-    if (e.target.className === 'text') {
-      const text = e.target.value
-      setEditText(text)
-    }
-    if (e.target.className === 'date') {
-      const time = e.target.value
-      setOldDate(time)
-      setEditTime(time)
-    }
 
+    const text = e.target.value
+    setEditText(text)
+  }
+
+  const handleTime = (e: any) => {
+    const time = e.target.value
+    setEditTime(time)
   }
   useEffect(() => {
     getAllPrivateData()
@@ -87,7 +85,7 @@ export const MyTask: React.FC = (props) => {
                     <div style={{ marginTop: '5px' }}>  Task Name:</div>
                     <Input type='text' onChange={e => handleInput(e)} className='task' placeholder={oldTask} style={{ width: '40%', marginLeft: '10px', marginRight: '10px' }} />
                     <div style={{ marginTop: '5px' }}>  Date:</div>
-                    <Input type='datetime-local' defaultValue={oldDate} onChange={e => handleInput(e)} className='date' style={{ width: '25%', marginLeft: '10px', marginRight: '10px' }} />
+                    <Input type='datetime-local' defaultValue={oldDate} onChange={e => handleTime(e)} className='date' style={{ width: '25%', marginLeft: '10px', marginRight: '10px' }} />
                     <Button type='submit' color='success' style={{ marginLeft: '8%' }}>Submit</Button>
                   </Row>
                 </div>
