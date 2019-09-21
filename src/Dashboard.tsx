@@ -132,7 +132,7 @@ export const Dashboard: React.FC<Props> = (props) => {
           <div><PublicTask /></div>
         ) : showMyTask ? (
           <div><MyTask /> </div>
-        ) : <MyTask />
+        ) : <PublicTask />
         : <Spinner color='secondary' style={{ marginLeft: '50%', marginTop: '30px' }} />
       }
     </div>

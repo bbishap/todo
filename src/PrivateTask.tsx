@@ -17,9 +17,17 @@ export const PrivateTask: React.FC = (props) => {
   const [task, setTask] = useState([] as todoItem[])
 
   const getAllPrivateData = () => {
-    db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(res => {
-      let data = res.data()!.tasks
-      setTask(data)
+    db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(querySnapshot => {
+      console.log(querySnapshot.data())
+      // debugger;
+      if (querySnapshot.data() !== undefined) {
+        let data = querySnapshot.data()!.tasks
+        setTask(data)
+      }
+      else {
+        db.collection('todos').doc(firebase.auth().currentUser!.uid).set({ tasks: [] })
+      }
+
     })
   }
 

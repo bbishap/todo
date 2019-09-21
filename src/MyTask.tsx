@@ -26,9 +26,16 @@ export const MyTask: React.FC = (props) => {
   const [oldDate, setOldDate] = useState(dateType)
 
   const getAllPrivateData = () => {
-    db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(res => {
-      let data = res.data()!.tasks
-      setTask(data)
+    db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(querySnapshot => {
+      console.log(querySnapshot.data())
+      // debugger;
+      if (querySnapshot.data() !== undefined) {
+        let data = querySnapshot.data()!.tasks
+        setTask(data)
+      }
+      else {
+        db.collection('todos').doc(firebase.auth().currentUser!.uid).set({ tasks: [] })
+      }
     })
   }
 
@@ -46,7 +53,6 @@ export const MyTask: React.FC = (props) => {
     setIndex(i)
     let state = task;
     const oldTodo: string = state[i].taskName
-    const oldTime: string = state[i].deadline
     setOldTask(oldTodo)
   }
   const handleEditSubmit = (e: any) => {

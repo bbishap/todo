@@ -33,7 +33,7 @@ export const AddTask: React.FC<Props> = (props) => {
 
     db.collection('todos').doc(uid).get().then(querySnapshot => {
       console.log(querySnapshot.data())
-      if (querySnapshot.data()!.length !== 0) {
+      if (querySnapshot.data() !== undefined) {
         console.log('asd')
         const todo = querySnapshot.data()!.tasks
         let body = [...todo, newTask]
