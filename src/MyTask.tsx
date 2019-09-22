@@ -77,7 +77,7 @@ export const MyTask: React.FC = (props) => {
   }
   useEffect(() => {
     getAllPrivateData()
-  }, [task])
+  }, [])
 
   return (
     <div>

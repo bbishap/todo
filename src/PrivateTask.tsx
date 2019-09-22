@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { Card, ListGroup } from 'reactstrap';
 import db from './helper';
 import ListCard from './card'
+import Sorting from './Sorting';
 
 interface todoItem {
   taskName: String,
@@ -33,12 +34,19 @@ export const PrivateTask: React.FC = (props) => {
 
   useEffect(() => {
     getAllPrivateData()
-  }, [task])
+  }, [])
 
+  const incomigData = (sorted: any) => {
+    console.log(sorted)
+    setTask(sorted)
+  }
   return (
     <div style={{ textAlign: 'center', margin: '30px auto', width: '60%' }}>
       <Card>
         <h2 style={{ height: '30px', margin: '30px 0' }}>Private Tasks</h2>
+        <div style={{ marginLeft: '80%', marginBottom: '30px' }}>
+          <Sorting data={task} incoming={(sorted: any) => incomigData(sorted)} />
+        </div>
         <ListGroup style={{ margin: 'auto', width: '70%' }}>
           {task.map((item: todoItem, i: number) => {
             if (item.private === true && item.deleted === false) {
