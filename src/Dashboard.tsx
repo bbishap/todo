@@ -3,19 +3,17 @@ import React, { useState, useEffect } from 'react';
 
 import firebase from 'firebase';
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
-  NavLink,
   NavItem,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   Button,
-  Spinner
+  Spinner,
+  Input
 } from 'reactstrap';
 import db from './helper'
 
@@ -23,6 +21,7 @@ import { PrivateTask } from './PrivateTask';
 import { PublicTask } from './PublicTask';
 import { MyTask } from './MyTask';
 import { AddTask } from './AddTask';
+const background: string = require('./assets/background.jpg')
 
 const boolType: boolean = false;
 
@@ -43,8 +42,9 @@ export const Dashboard: React.FC<Props> = (props) => {
   // const [isOpen, setIsOpen] = useState(openType);
   const [showPrivateTask, setShowPrivateTask] = useState(boolType);
   const [showPublicTask, setShowPublicTask] = useState(boolType);
-  const [showMyTask, setShowMyTask] = useState(boolType)
+  const [showMyTask, setShowMyTask] = useState(true)
   const [task, setTask] = useState([] as todo[]);
+  const [searchData, setSearchData] = useState('')
 
 
   const handleClickPrivate: Function = () => {
@@ -79,18 +79,28 @@ export const Dashboard: React.FC<Props> = (props) => {
     setTask(todo)
   }
 
+  const handleSearch = (e: any) => {
+    let searching = e.target.value
+    setSearchData(searching);
+  }
+
   useEffect(() => {
 
     getAllData()
 
   }, [])
 
+
   return (
 
-    <div >
+    <div>
       <Navbar color="dark" light expand="md">
         <NavbarBrand href="/" style={{ color: 'white' }}>TODO</NavbarBrand>
+        <div style={{ marginLeft: '216px', width: '40%' }}>
+          {showMyTask ? null : <Input type='text' placeholder='Search Task Here ...' onChange={(e: any) => handleSearch(e)} />}
+        </div>
         <Nav className="ml-auto" navbar>
+
           <NavItem>
             <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickPublic()}>
               Public Tasks
@@ -103,7 +113,7 @@ export const Dashboard: React.FC<Props> = (props) => {
           </NavItem>
           <NavItem>
             <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickMyTask()}>
-              My All Tasks
+              My Tasks
               </Button>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
@@ -124,15 +134,15 @@ export const Dashboard: React.FC<Props> = (props) => {
           </UncontrolledDropdown>
         </Nav>
       </Navbar>
-      <div> <AddTask refresh={getAllData} /> </div>
+      <div>{showMyTask ? <AddTask refresh={getAllData} /> : null} </div>
       {task ?
         showPrivateTask ? (
-          <div><PrivateTask /></div>
+          <div><PrivateTask data={searchData} /></div>
         ) : showPublicTask ? (
-          <div><PublicTask /></div>
+          <div><PublicTask data={searchData} /></div>
         ) : showMyTask ? (
           <div><MyTask /> </div>
-        ) : <PublicTask />
+        ) : <MyTask />
         : <Spinner color='secondary' style={{ marginLeft: '50%', marginTop: '30px' }} />
       }
     </div>

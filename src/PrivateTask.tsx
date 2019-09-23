@@ -12,18 +12,23 @@ interface todoItem {
   deadline: Date,
   private: Boolean
 }
+interface Props {
+  data: string
+}
 
-export const PrivateTask: React.FC = (props) => {
+export const PrivateTask: React.FC<Props> = (props) => {
 
   const [task, setTask] = useState([] as todoItem[])
+  const [constData, setConstData] = useState([] as todoItem[])
 
   const getAllPrivateData = () => {
     db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(querySnapshot => {
-      console.log(querySnapshot.data())
-      // debugger;
+
+
       if (querySnapshot.data() !== undefined) {
         let data = querySnapshot.data()!.tasks
         setTask(data)
+        setConstData(data)
       }
       else {
         db.collection('todos').doc(firebase.auth().currentUser!.uid).set({ tasks: [] })
@@ -32,20 +37,33 @@ export const PrivateTask: React.FC = (props) => {
     })
   }
 
+  const searchData = () => {
+    const toSearch = props.data
+    var allData = constData;
+    let result: any = allData.filter(x => x.taskName.includes(toSearch));
+    setTask(result)
+  }
+
   useEffect(() => {
     getAllPrivateData()
   }, [])
 
-  const incomigData = (sorted: any) => {
-    console.log(sorted)
+  useEffect(() => {
+    searchData()
+  }, [props.data])
+
+  const incomingData = (sorted: any) => {
     setTask(sorted)
+    setConstData(sorted)
   }
+
+
   return (
     <div style={{ textAlign: 'center', margin: '30px auto', width: '60%' }}>
       <Card>
         <h2 style={{ height: '30px', margin: '30px 0' }}>Private Tasks</h2>
         <div style={{ marginLeft: '80%', marginBottom: '30px' }}>
-          <Sorting data={task} incoming={(sorted: any) => incomigData(sorted)} />
+          <Sorting data={task} incoming={(sorted: any) => incomingData(sorted)} />
         </div>
         <ListGroup style={{ margin: 'auto', width: '70%' }}>
           {task.map((item: todoItem, i: number) => {

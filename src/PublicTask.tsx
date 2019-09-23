@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, ListGroupItem, ListGroup } from 'reactstrap';
+import { Card, ListGroup } from 'reactstrap';
 import db from './helper'
 import ListCard from './card'
 import Sorting from './Sorting'
@@ -11,10 +11,15 @@ interface todoItem {
   deadline: Date,
   private: Boolean
 }
+interface Props {
+  data: string
+}
 
-export const PublicTask: React.FC = (props) => {
+export const PublicTask: React.FC<Props> = (props) => {
 
   const [task, setTask] = useState([] as todoItem[])
+  const [constData, setConstData] = useState([] as todoItem[])
+
 
   const getAllData = async () => {
     let data = await db.collection('todos').get()
@@ -26,6 +31,15 @@ export const PublicTask: React.FC = (props) => {
       });
     })
     setTask(todo)
+    setConstData(todo)
+
+  }
+
+  const searchData = () => {
+    const toSearch = props.data.toLowerCase()
+    var allData = constData;
+    let result: any = allData.filter(obj => obj.taskName.toLowerCase().includes(toSearch));
+    setTask(result)
   }
 
   useEffect(() => {
@@ -34,9 +48,13 @@ export const PublicTask: React.FC = (props) => {
 
   }, [])
 
+  useEffect(() => {
+    searchData()
+  }, [props.data])
+
   const incomingData = (sorted: any) => {
-    console.log(sorted)
     setTask(sorted)
+    setConstData(sorted)
   }
 
   return (
@@ -48,7 +66,7 @@ export const PublicTask: React.FC = (props) => {
         </div>
         <ListGroup style={{ margin: 'auto', width: '70%' }}>
           {task.map((item: todoItem, i: number) => {
-            if (item.private === false) {
+            if (item.private === false && item.deleted === false) {
               return (
                 <ListCard item={item} key={i} />
               );

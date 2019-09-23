@@ -27,8 +27,6 @@ export const MyTask: React.FC = (props) => {
 
   const getAllPrivateData = () => {
     db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(querySnapshot => {
-      console.log(querySnapshot.data())
-      // debugger;
       if (querySnapshot.data() !== undefined) {
         let data = querySnapshot.data()!.tasks
         setTask(data)
@@ -77,7 +75,7 @@ export const MyTask: React.FC = (props) => {
   }
   useEffect(() => {
     getAllPrivateData()
-  }, [])
+  }, [task])
 
   return (
     <div>
