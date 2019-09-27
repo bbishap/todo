@@ -7,8 +7,8 @@ interface Props {
   incoming: any
 }
 
-const boolType: boolean = false
 const Sorting: React.FC<Props> = (props) => {
+
   const { data, incoming } = props;
 
   const handleSort = () => {

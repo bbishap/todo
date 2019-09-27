@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { ListGroupItem } from 'reactstrap'
-import db from './helper'
 
 interface item {
   taskName: String,
@@ -12,10 +11,7 @@ interface Props {
   item: item
 }
 
-let type: String = ''
-
 const Card: React.FC<Props> = (props) => {
-  const [reload, setReload] = useState(type)
 
   const item: item = props.item
 

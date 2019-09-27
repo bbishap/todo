@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import db from './helper'
 import firebase from 'firebase'
 import { Button, Input, Form, Card } from 'reactstrap';
-
-
+import axios from 'axios';
 import Switch from "react-switch";
 
 const openType: boolean = false;
@@ -26,7 +25,17 @@ export const AddTask: React.FC<Props> = (props) => {
   const [todo, setTodo] = useState([] as todo[])
   const [switchTask, setSwitchTask] = useState(openType);
 
+  const email = firebase.auth().currentUser!.email;
+  const name = firebase.auth().currentUser!.displayName;
+  const timeOut = deadline;
+  const task = taskName;
+
   const onButtonClick: Function = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    axios.post('/todo', {
+      email, timeOut, task, name
+    })
+
     e.preventDefault();
     const newTask = { taskName, deadline, private: switchTask, deleted: false }
     let uid = firebase.auth().currentUser!.uid
@@ -42,7 +51,9 @@ export const AddTask: React.FC<Props> = (props) => {
         setTodo([newTask])
       }
     })
+
     props.refresh()
+
   }
 
   const onSwitchChange: Function = () => {

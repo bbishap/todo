@@ -24,7 +24,6 @@ export const PrivateTask: React.FC<Props> = (props) => {
   const getAllPrivateData = () => {
     db.collection('todos').doc(firebase.auth().currentUser!.uid).get().then(querySnapshot => {
 
-
       if (querySnapshot.data() !== undefined) {
         let data = querySnapshot.data()!.tasks
         setTask(data)
@@ -56,7 +55,6 @@ export const PrivateTask: React.FC<Props> = (props) => {
     setTask(sorted)
     setConstData(sorted)
   }
-
 
   return (
     <div style={{ textAlign: 'center', margin: '30px auto', width: '60%' }}>

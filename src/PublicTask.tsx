@@ -4,13 +4,13 @@ import db from './helper'
 import ListCard from './card'
 import Sorting from './Sorting'
 
-
 interface todoItem {
   taskName: String,
   deleted: Boolean,
   deadline: Date,
   private: Boolean
 }
+
 interface Props {
   data: string
 }
@@ -32,7 +32,6 @@ export const PublicTask: React.FC<Props> = (props) => {
     })
     setTask(todo)
     setConstData(todo)
-
   }
 
   const searchData = () => {
@@ -43,9 +42,7 @@ export const PublicTask: React.FC<Props> = (props) => {
   }
 
   useEffect(() => {
-
     getAllData()
-
   }, [])
 
   useEffect(() => {

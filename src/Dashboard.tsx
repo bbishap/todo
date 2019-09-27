@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-
 import firebase from 'firebase';
 import {
   Navbar,
@@ -21,7 +19,6 @@ import { PrivateTask } from './PrivateTask';
 import { PublicTask } from './PublicTask';
 import { MyTask } from './MyTask';
 import { AddTask } from './AddTask';
-const background: string = require('./assets/background.jpg')
 
 const boolType: boolean = false;
 
@@ -39,13 +36,11 @@ interface Props {
 
 
 export const Dashboard: React.FC<Props> = (props) => {
-  // const [isOpen, setIsOpen] = useState(openType);
   const [showPrivateTask, setShowPrivateTask] = useState(boolType);
   const [showPublicTask, setShowPublicTask] = useState(boolType);
   const [showMyTask, setShowMyTask] = useState(true)
   const [task, setTask] = useState([] as todo[]);
   const [searchData, setSearchData] = useState('')
-
 
   const handleClickPrivate: Function = () => {
     setShowPrivateTask(true)
@@ -89,7 +84,6 @@ export const Dashboard: React.FC<Props> = (props) => {
     getAllData()
 
   }, [])
-
 
   return (
 

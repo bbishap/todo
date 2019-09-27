@@ -4,13 +4,13 @@ import firebase from 'firebase';
 import { Card, ListGroup, ListGroupItem, Button, Input, Form, Row } from 'reactstrap';
 import db from './helper';
 
-
 interface todoItem {
   taskName: string,
   deleted: Boolean,
   deadline: string,
   private: Boolean
 }
+
 const boolType: boolean = false
 const strType: string = ''
 const dateType: any = ''
@@ -19,8 +19,6 @@ export const MyTask: React.FC = (props) => {
 
   const [task, setTask] = useState([] as todoItem[])
   const [showEdit, setShowEdit] = useState(boolType)
-  const [editText, setEditText] = useState('')
-  const [editTime, setEditTime] = useState(dateType)
   const [index, setIndex] = useState()
   const [oldTask, setOldTask] = useState(strType)
   const [oldDate, setOldDate] = useState(dateType)
@@ -51,13 +49,15 @@ export const MyTask: React.FC = (props) => {
     setIndex(i)
     let state = task;
     const oldTodo: string = state[i].taskName
+    const oldTime: string = state[i].deadline
     setOldTask(oldTodo)
+    setOldDate(oldTime)
   }
   const handleEditSubmit = (e: any) => {
     e.preventDefault()
     let state = task;
-    state[index].taskName = editText;
-    state[index].deadline = editTime;
+    state[index].taskName = oldTask;
+    state[index].deadline = oldDate;
     setTask(state)
     db.collection('todos').doc(firebase.auth().currentUser!.uid).set({ tasks: task })
     setShowEdit(false)
@@ -66,12 +66,12 @@ export const MyTask: React.FC = (props) => {
   const handleInput = (e: any) => {
 
     const text = e.target.value
-    setEditText(text)
+    setOldTask(text)
   }
 
   const handleTime = (e: any) => {
     const time = e.target.value
-    setEditTime(time)
+    setOldDate(time)
   }
   useEffect(() => {
     getAllPrivateData()
@@ -87,9 +87,9 @@ export const MyTask: React.FC = (props) => {
                 <div style={{ marginBottom: '20px' }}>
                   <Row>
                     <div style={{ marginTop: '5px' }}>  Task Name:</div>
-                    <Input type='text' onChange={e => handleInput(e)} className='task' placeholder={oldTask} style={{ width: '40%', marginLeft: '10px', marginRight: '10px' }} />
+                    <Input type='text' onChange={e => handleInput(e)} className='task' value={oldTask} style={{ width: '40%', marginLeft: '10px', marginRight: '10px' }} />
                     <div style={{ marginTop: '5px' }}>  Date:</div>
-                    <Input type='datetime-local' defaultValue={oldDate} onChange={e => handleTime(e)} className='date' style={{ width: '25%', marginLeft: '10px', marginRight: '10px' }} />
+                    <Input type='datetime-local' value={oldDate} onChange={e => handleTime(e)} className='date' style={{ width: '25%', marginLeft: '10px', marginRight: '10px' }} />
                     <Button type='submit' color='success' style={{ marginLeft: '8%' }}>Submit</Button>
                   </Row>
                 </div>

@@ -1,4 +1,3 @@
-// import admin from 'firebase-admin'
 import firebase from 'firebase'
 require('firebase/firestore');
 

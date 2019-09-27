@@ -1,0 +1,13 @@
+{
+  "name": "mailer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Bishap Bhusal",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.3.0"
+  }
+}
