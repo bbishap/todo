@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 const background: string = require('./assets/background.jpg')
 const uiConfig = {
   signInFlow: 'popup',

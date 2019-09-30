@@ -39,6 +39,7 @@ const App: React.FC = (props) => {
           <Spinner color='secondary' style={{ marginLeft: '50%', marginTop: '30px' }} /> :
           signedIn ? (<Dashboard userName={user} photo={userImg} />) : (<SignIn />)
       }
+      {console.clear()}
     </div>
   );
 }

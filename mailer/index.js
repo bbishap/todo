@@ -8,8 +8,8 @@ const app = express();
 let transporter = nodeMailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'bbishap@gmail.com',
-    pass: 'HamroSagarmatha123'
+    user: 'todo.app.web@gmail.com',
+    pass: 'bishapbhusal'
   }
 });
 
@@ -39,7 +39,7 @@ app.post('/todo', (req, res) => {
     function () {
 
       const config = {
-        from: 'bbishap@gmail.com',
+        from: 'todo.app.web@gmail.com',
         to: `${receiver}`,
         subject: 'Complete Your Task Before Deadline',
         html: `<h1> Hello ${name}, Please Complete your Task Before Deadline </h1> <h4> Your Task : ${task} , deadline is about to end. </h4>`

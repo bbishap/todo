@@ -86,59 +86,60 @@ export const Dashboard: React.FC<Props> = (props) => {
   }, [])
 
   return (
+    <>
+      <div>
+        <Navbar color="dark" light expand="md">
+          <NavbarBrand href="/" style={{ color: 'white' }}>TODO</NavbarBrand>
+          <div>
+            {showMyTask ? null : <Input type='text' placeholder='Search Task Here ...' onChange={(e: any) => handleSearch(e)} />}
+          </div>
+          <Nav className="ml-auto" navbar style={{ marginTop: 10 }}>
 
-    <div>
-      <Navbar color="dark" light expand="md">
-        <NavbarBrand href="/" style={{ color: 'white' }}>TODO</NavbarBrand>
-        <div style={{ marginLeft: '216px', width: '40%' }}>
-          {showMyTask ? null : <Input type='text' placeholder='Search Task Here ...' onChange={(e: any) => handleSearch(e)} />}
-        </div>
-        <Nav className="ml-auto" navbar>
-
-          <NavItem>
-            <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickPublic()}>
-              Public Tasks
+            <NavItem>
+              <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickPublic()}>
+                Public Tasks
               </Button>
-          </NavItem>
-          <NavItem>
-            <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickPrivate()}>
-              Private Tasks
+            </NavItem>
+            <NavItem>
+              <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickPrivate()}>
+                Private Tasks
               </Button>
-          </NavItem>
-          <NavItem>
-            <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickMyTask()}>
-              My Tasks
+            </NavItem>
+            <NavItem>
+              <Button color='primary' style={{ marginRight: '10px', color: 'white', textAlign: 'center' }} onClick={() => handleClickMyTask()}>
+                My Tasks
               </Button>
-          </NavItem>
-          <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret style={{ color: 'white' }}>
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>
-                <img src={props.photo} alt={props.userName} style={{ width: '40px', marginLeft: '50px' }} />
-              </DropdownItem>
-              <DropdownItem style={{ textAlign: 'center' }}>
-                {props.userName}
-              </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>
-                <Button onClick={() => firebase.auth().signOut()} style={{ width: '150px', border: '0px' }}>Sign Out</Button>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </Nav>
-      </Navbar>
-      <div>{showMyTask ? <AddTask refresh={getAllData} /> : null} </div>
-      {task ?
-        showPrivateTask ? (
-          <div><PrivateTask data={searchData} /></div>
-        ) : showPublicTask ? (
-          <div><PublicTask data={searchData} /></div>
-        ) : showMyTask ? (
-          <div><MyTask /> </div>
-        ) : <MyTask />
-        : <Spinner color='secondary' style={{ marginLeft: '50%', marginTop: '30px' }} />
-      }
-    </div>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret style={{ color: 'white' }}>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  <img src={props.photo} alt={props.userName} style={{ width: '40px', marginLeft: '50px' }} />
+                </DropdownItem>
+                <DropdownItem style={{ textAlign: 'center' }}>
+                  {props.userName}
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <Button onClick={() => firebase.auth().signOut()} style={{ width: '150px', border: '0px' }}>Sign Out</Button>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+        </Navbar>
+        <div>{showMyTask ? <AddTask refresh={getAllData} /> : null} </div>
+        {task ?
+          showPrivateTask ? (
+            <div><PrivateTask data={searchData} /></div>
+          ) : showPublicTask ? (
+            <div><PublicTask data={searchData} /></div>
+          ) : showMyTask ? (
+            <div><MyTask /> </div>
+          ) : <MyTask />
+          : <Spinner color='secondary' style={{ marginLeft: '50%', marginTop: '30px' }} />
+        }
+      </div>
+    </>
   );
 }

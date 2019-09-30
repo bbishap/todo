@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import db from './helper'
 import firebase from 'firebase'
 import { Button, Input, Form, Card } from 'reactstrap';
@@ -71,33 +71,35 @@ export const AddTask: React.FC<Props> = (props) => {
   }
 
   return (
-    <Card style={{ width: '60%', marginTop: '30px', marginLeft: '20%' }}>
-      <div>
-        <Form onSubmit={(e) => onButtonClick(e)}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }} >
-            <div style={{ width: '53%', marginTop: '30px', marginLeft: '20px' }}>
-              <Input onBlur={(e) => handleChange(e)} type="text" name="text" id="newTodo" placeholder="Add New Task Here ..." />
+    <>
+      <Card style={{ width: '60%', marginTop: '30px', marginLeft: '20%' }}>
+        <div>
+          <Form onSubmit={(e) => onButtonClick(e)}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }} >
+              <div style={{ width: '53%', marginTop: '30px', marginLeft: '20px' }}>
+                <Input onBlur={(e) => handleChange(e)} type="text" name="text" id="newTodo" placeholder="Add New Task Here ..." />
+              </div>
+              <div style={{ width: '10%', marginTop: '30px', marginLeft: '20px' }}>
+                <Button type="submit" color="success" >Add Task </Button>
+              </div>
             </div>
-            <div style={{ width: '10%', marginTop: '30px', marginLeft: '20px' }}>
-              <Button type="submit" color="success" >Add Task </Button>
-            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+              <div style={{ width: '20%', marginTop: '50px', marginLeft: '0px', marginBottom: '25px' }}>
+                Deadline Of The Task :
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-            <div style={{ width: '20%', marginTop: '50px', marginLeft: '0px', marginBottom: '25px' }}>
-              Deadline Of The Task :
-          </div>
-            <div style={{ marginTop: '32px', marginLeft: '5px', marginRight: '10px' }}>
-              <Input type='datetime-local' onBlur={(e) => handleChange(e)} name='deadline' />
-            </div>
-            <div style={{ width: '20%', marginTop: '50px', marginLeft: '5px', marginBottom: '25px' }}>
-              Is This Your Private Task ?
+              <div style={{ marginTop: '32px', marginLeft: '5px', marginRight: '10px' }}>
+                <Input type='datetime-local' onBlur={(e) => handleChange(e)} name='deadline' />
+              </div>
+              <div style={{ width: '20%', marginTop: '50px', marginLeft: '5px', marginBottom: '25px' }}>
+                Is This Your Private Task ?
         </div>
-            <div style={{ marginTop: '32px', marginLeft: '10px', marginRight: '10px' }}>
-              <Switch onChange={(e) => onSwitchChange(e)} checked={switchTask} />
+              <div style={{ marginTop: '32px', marginLeft: '10px', marginRight: '10px' }}>
+                <Switch onChange={(e) => onSwitchChange(e)} checked={switchTask} />
+              </div>
             </div>
-          </div>
-        </Form>
-      </div >
-    </Card>
+          </Form>
+        </div >
+      </Card>
+    </>
   );
 }

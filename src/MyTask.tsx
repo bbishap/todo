@@ -78,54 +78,55 @@ export const MyTask: React.FC = (props) => {
   }, [task])
 
   return (
-    <div>
-      {showEdit ?
-        <div style={{ justifyContent: 'center' }}>
-          <Card style={{ marginTop: '40px', width: '80%', marginLeft: '10%', justifyContent: 'center' }}>
-            <ListGroup style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px', width: '100%' }}>
-              <Form onSubmit={(e) => handleEditSubmit(e)} style={{ marginLeft: '5%' }}>
-                <div style={{ marginBottom: '20px' }}>
-                  <Row>
-                    <div style={{ marginTop: '5px' }}>  Task Name:</div>
-                    <Input type='text' onChange={e => handleInput(e)} className='task' value={oldTask} style={{ width: '40%', marginLeft: '10px', marginRight: '10px' }} />
-                    <div style={{ marginTop: '5px' }}>  Date:</div>
-                    <Input type='datetime-local' value={oldDate} onChange={e => handleTime(e)} className='date' style={{ width: '25%', marginLeft: '10px', marginRight: '10px' }} />
-                    <Button type='submit' color='success' style={{ marginLeft: '8%' }}>Submit</Button>
-                  </Row>
-                </div>
-              </Form>
-            </ListGroup>
-          </Card>
-        </div> :
-        <div style={{ textAlign: 'center', margin: '30px auto', width: '60%' }}>
-          <Card>
-            <h2 style={{ height: '30px', margin: '30px 0' }}>My Tasks</h2>
-            <ListGroup style={{ margin: 'auto', width: '70%' }}>
-              {task.map((item: todoItem, i: number) => {
-                if (item.deleted === false) {
-                  return (
-                    <div style={{ width: '100%' }}>
-                      <div>
-                        <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }} >
-                          <div><b>{item.taskName}</b></div>
-                          <div>{new Date(item.deadline).toDateString()} - {new Date(item.deadline).toLocaleTimeString()}</div>
-                          <div></div>
-                          <div>
-                            <Button color="info" onClick={() => handleEdit(i)} style={{ marginRight: '5px' }}>Edit</Button>
-
-                            <Button color="danger" onClick={() => handleDelete(i)}>Delete</Button>
-                          </div>
-                        </ListGroupItem>
+    <>
+      <div>
+        {showEdit ?
+          <div style={{ justifyContent: 'center' }}>
+            <Card style={{ marginTop: '40px', width: '80%', marginLeft: '10%', justifyContent: 'center' }}>
+              <ListGroup style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px', width: '100%' }}>
+                <Form onSubmit={(e) => handleEditSubmit(e)} style={{ marginLeft: '5%' }}>
+                  <div style={{ marginBottom: '20px' }}>
+                    <Row>
+                      <div style={{ marginTop: '5px' }}>  Task Name:</div>
+                      <Input type='text' onChange={e => handleInput(e)} className='task' value={oldTask} style={{ width: '40%', marginLeft: '10px', marginRight: '10px' }} />
+                      <div style={{ marginTop: '5px' }}>  Date:</div>
+                      <Input type='datetime-local' value={oldDate} onChange={e => handleTime(e)} className='date' style={{ width: '25%', marginLeft: '10px', marginRight: '10px' }} />
+                      <Button type='submit' color='success' style={{ marginLeft: '8%' }}>Submit</Button>
+                    </Row>
+                  </div>
+                </Form>
+              </ListGroup>
+            </Card>
+          </div> :
+          <div style={{ textAlign: 'center', margin: '30px auto', width: '60%' }}>
+            <Card>
+              <h2 style={{ height: '30px', margin: '30px 0' }}>My Tasks</h2>
+              <ListGroup style={{ margin: 'auto', width: '70%' }}>
+                {task.map((item: todoItem, i: number) => {
+                  if (item.deleted === false) {
+                    return (
+                      <div key={i} style={{ width: '100%' }}>
+                        <div>
+                          <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }} >
+                            <div><b>{item.taskName}</b></div>
+                            <div >{new Date(item.deadline).toDateString()} - {new Date(item.deadline).toLocaleTimeString()}</div>
+                            <div>
+                              <Button color="info" onClick={() => handleEdit(i)} style={{ marginRight: '5px' }}>Edit</Button>
+                              <Button color="danger" onClick={() => handleDelete(i)}>Delete</Button>
+                            </div>
+                          </ListGroupItem>
+                        </div>
                       </div>
-                    </div>
-                  )
-                }
-              })}
-            </ListGroup>
-          </Card>
-        </div >
-      }
-    </div>
+                    )
+                  }
+                  return null;
+                })}
+              </ListGroup>
+            </Card>
+          </div >
+        }
+      </div>
+    </>
   );
 }
 
